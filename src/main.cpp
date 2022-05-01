@@ -82,8 +82,8 @@ vector<shared_ptr<Scene>> init()
 	shared_ptr<Sphere> blueSphere2 = make_shared<Sphere>(glm::vec3(1.0f, -0.7f, 0.0f), glm::vec3(0.3f, 0.3f, 0.3f), 0.3f);
 	blueSphere2->setMat(mat3);
 
-	shared_ptr<Sphere> reflSphere1 = make_shared<Sphere>(glm::vec3(-0.5f, 0.0f, -0.5f), glm::vec3(1.0f, 1.0f, 1.0f), 1.0f);
-	shared_ptr<Sphere> reflSphere2 = make_shared<Sphere>(glm::vec3(1.5f, 0.0f, -1.5f), glm::vec3(1.0f, 1.0f, 1.0f), 1.0f);
+	shared_ptr<Sphere> reflSphere1 = make_shared<Sphere>(glm::vec3(-0.5f, 0.0f, -0.5f) /*glm::vec3(0.0f, 0.0f, 0.0f)*/, glm::vec3(1.0f, 1.0f, 1.0f), 1.0f, true);
+	shared_ptr<Sphere> reflSphere2 = make_shared<Sphere>(glm::vec3(1.5f, 0.0f, -1.5f), glm::vec3(1.0f, 1.0f, 1.0f), 1.0f, true);
 	Material blackMat(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 0.0f), 0.0f);
 	reflSphere1->setMat(blackMat);
 	reflSphere2->setMat(blackMat);

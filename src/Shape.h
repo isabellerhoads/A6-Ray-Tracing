@@ -19,7 +19,7 @@ class Shape
 public:
 
 	virtual std::shared_ptr<Hit> Intersect(std::shared_ptr<Ray> ray) { return NULL; }
-
+	
 };
 
 
@@ -28,7 +28,8 @@ class Sphere : public Shape
 {
 public:
 
-	Sphere(glm::vec3 pos, glm::vec3 sc, float r) : position(pos), scale(sc), radius(r) {}
+	Sphere(glm::vec3 pos, glm::vec3 sc, float r, bool refl) : position(pos), scale(sc), radius(r), reflective(refl) {}
+	Sphere(glm::vec3 pos, glm::vec3 sc, float r) : position(pos), scale(sc), radius(r), reflective(false) {}
 
 	void setMat(Material m)
 	{
@@ -74,6 +75,7 @@ private:
 	glm::vec3 position;
 	glm::vec3 scale;
 	Material mat;
+	bool reflective;
 };
 
 

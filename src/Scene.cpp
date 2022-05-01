@@ -54,14 +54,37 @@ std::shared_ptr<Hit> Scene::hit(shared_ptr<Ray> ray, float t0, float t1)
 	return NULL;
 }
 
-glm::vec3 Scene::computeRayColor(shared_ptr<Ray> ray, float t0, float t1, glm::vec3 camPos, bool reflection)
+glm::vec3 Scene::computeRayColor(shared_ptr<Ray> ray, float t0, float t1, glm::vec3 camPos)
 {
 	shared_ptr<Hit> h = make_shared<Hit>();
 	h = hit(ray, t0, t1);
 
 	if (h != NULL) 
 	{
-		return this->computeBP(h, camPos);
+		/* if the ray hits a reflective object */
+		if (h->getMat().get_diffuse() == glm::vec3(0.0f, 0.0f, 0.0f))
+		{
+			glm::vec3 I = ray->getDirection();
+			glm::vec3 N = normalize(h->getNormal());
+			glm::vec3 reflDir = reflect(I, N);
+			shared_ptr<Ray> reflRay = make_shared<Ray>(h->getPosition() + (0.001f * reflDir), reflDir);
+
+			return this->computeRayColor(reflRay, 0.01, 1000, h->getPosition());
+
+			/* This is a single bounce without recursion */
+			//shared_ptr<Hit> reflHit = make_shared<Hit>();
+			//reflHit = hit(reflRay, 0.001, t1);
+
+			//if (reflHit != NULL)
+			//{
+			//	return this->computeBP(reflHit, camPos);
+			//}
+		}
+		/* if the ray hits a blinn-phong object */
+		else
+		{
+			return this->computeBP(h, camPos);
+		}
 	}
 
 	return glm::vec3(0.0f, 0.0f, 0.0f);
@@ -83,7 +106,7 @@ glm::vec3 Scene::computeBP(std::shared_ptr<Hit> ht, glm::vec3 camPos)
 		shared_ptr<Hit> shadHit = make_shared<Hit>();
 		float tLight = length(light->getPosition() - ht->getPosition());
 
-		shadHit = hit(sray, 0.01, tLight);
+		shadHit = hit(sray, 0.0001f, tLight);
 
 		if (shadHit != NULL)
 		{

@@ -27,14 +27,8 @@ void Camera::generateRays(glm::vec3 plane, std::shared_ptr<Image> image, std::sh
 			glm::vec3 pix = glm::vec3(x, y, plane.z);
 			glm::vec3 direction = pix - this->position;
 			auto ray = make_shared<Ray>(this->position, normalize(direction));
-			if (!reflection)
-			{
-				color = scene->computeRayColor(ray, 0, INFINITY, this->position, false);
-			}
-			else
-			{
-				color = scene->computeRayColor(ray, 0, INFINITY, this->position, true);
-			}
+			color = scene->computeRayColor(ray, 0, INFINITY, this->position);
+
 			image->setPixel(size - 1 - i, size - 1 - j, color.x*255, color.y*255, color.z*255);
 
 			//x += pixel;

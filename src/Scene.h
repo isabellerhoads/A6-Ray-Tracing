@@ -26,7 +26,7 @@ public:
 	void addLight(std::shared_ptr<Light> light);
 	void setNumber(int num);
 	std::shared_ptr<Hit> hit(std::shared_ptr<Ray> ray, float t0, float t1);
-	glm::vec3 computeRayColor(std::shared_ptr<Ray> ray, float t0, float t1, glm::vec3 camPos, bool reflection);
+	glm::vec3 computeRayColor(std::shared_ptr<Ray> ray, float t0, float t1, glm::vec3 camPos);
 	glm::vec3 computeBP(std::shared_ptr<Hit> ht, glm::vec3 camPos);
 
 private:
